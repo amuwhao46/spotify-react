@@ -6,7 +6,10 @@ const AUTH_URL = "https://accounts.spotify.com/authorize?client_id=fc24ace5aa794
 // %20 means space
 export default function Login() {
   return (
-    <Container>
+    <Container 
+        className='d-flex justify-content-center align-items-center'
+        style={{ minHeight: "100vh" }}
+        >
         <a className='btn btn-success btn-lg' href={AUTH_URL}>
             Login With Spotify
         </a>
