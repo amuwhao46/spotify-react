@@ -7,12 +7,33 @@ const app = express();
 app.use(cors())
 app.use(bodyParser.json())
 
+app.post('/refresh', (req, res) => {
+    const refreshToken = req.body.refreshToken
+    const spotifyApi = new SpotifyWebApi({
+        redirectUri: 'http://localhost:3000',
+        clientId: 'Unknown',
+        clientSecret: 'Unknown',
+        refreshToken,
+    })
+
+    spotifyApi.refreshAccessToken()
+    .then(
+        (data) => {
+            console.log(data.body)
+        })
+        .catch(() => {
+            res.sendStatus(400)
+        }); 
+})
+
+
+
 app.post('/login', (req, res) => {
     const code = req.body.code;
     const spotifyApi = new SpotifyWebApi({
         redirectUri: 'http://localhost:3000',
-        clientId: 'Unkown',
-        clientSecret: 'Unknown'
+        clientId: 'Unknown',
+        clientSecret: 'Unknown',
     })
 
     spotifyApi.authorizationCodeGrant(code).then(data => {
