@@ -3,12 +3,12 @@ const express = require('express');
 const SpotifyWebApi = require('spotify-web-api-node');
 const cors = require("cors");
 const bodyParser = require("body-parser");
+const lyricsFinder = require("lyrics-finder")
 
 const app = express();
 app.use(cors())
 app.use(bodyParser.json())
-
-
+app.use(bodyParser.urlencoded({ extended: true }))
 
 app.post('/refresh', (req, res) => {
 
@@ -54,6 +54,12 @@ app.post('/login', (req, res) => {
         //console.log(err)
         res.sendStatus(400)
     })
+})
+
+// Print lyrics
+app.get('/lyrics', async (req, res) => {
+    const lyrics = await lyricsFinder(req.query.artist, req.query.track) || "Lyrics are unavailable"
+    res.json({ lyrics })
 })
 
 app.listen(3001)
