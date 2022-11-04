@@ -1,7 +1,9 @@
 import { useState, useEffect } from "react"
 import useAuth from "./useAuth"
+import TrackSearchResult from "./TrackSearchResult"
 import { Container, Form } from "react-bootstrap"
 import SpotifyWebApi from "spotify-web-api-node"
+import Player from "./Player"
 
 const spotifyApi = new SpotifyWebApi({
     clientId: 'fc24ace5aa794c269a5723ac954569e9',
@@ -38,7 +40,7 @@ export default function Dashboard({ code }) {
                 return {
                     artistName: track.artists[0].name,
                     title: track.name,
-                    songUri: track.uri,
+                    uri: track.uri,
                     albumUrl: smallestAlbumImage.url,
                 }
             }))
@@ -59,6 +61,6 @@ export default function Dashboard({ code }) {
                 <TrackSearchResult track={track} key={track.uri} />
             ))}
         </div>
-        <div>Bottom</div>
+        <div><Player /></div>
     </Container>
 }
